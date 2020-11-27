@@ -7,5 +7,5 @@ var router = gin.Default()
 // StartApp sets up routes and starts a gin server
 func StartApp() {
 	MapRoutes()
-	router.Run(":8080")
+	router.Run("localhost:8080")
 }
