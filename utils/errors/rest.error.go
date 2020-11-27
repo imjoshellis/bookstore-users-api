@@ -26,3 +26,12 @@ func NewNotFountError(msg string) *RestErr {
 		Error:   "not found",
 	}
 }
+
+// NewServerError creates a server error with given message
+func NewServerError(msg string) *RestErr {
+	return &RestErr{
+		Message: msg,
+		Status:  http.StatusInternalServerError,
+		Error:   "internal server error",
+	}
+}

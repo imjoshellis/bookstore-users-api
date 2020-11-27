@@ -10,7 +10,7 @@ var userDb = make(map[int64]*User)
 // Get tries to get a user from the database
 func (u *User) Get() *errors.RestErr {
 	result := userDb[u.ID]
-	if result != nil {
+	if result == nil {
 		msg := fmt.Sprintf("user %d not found", u.ID)
 		return errors.NewBadRequestError(msg)
 	}
@@ -28,6 +28,12 @@ func (u *User) Save() *errors.RestErr {
 	if current != nil {
 		msg := fmt.Sprintf("user %d already exists", u.ID)
 		return errors.NewBadRequestError(msg)
+	}
+	userDb[u.ID] = u
+	result := userDb[u.ID]
+	if result == nil {
+		msg := "there was a problem saving to the db"
+		return errors.NewServerError(msg)
 	}
 	return nil
 }
