@@ -5,13 +5,25 @@ import (
 	"bookstore/users/services"
 	"bookstore/users/utils/errors"
 	"net/http"
+	"strconv"
 
 	"github.com/gin-gonic/gin"
 )
 
 // GetUser returns an individual user
 func GetUser(c *gin.Context) {
-	// ??? implement response
+	id, err := strconv.ParseInt(c.Param("id"), 10, 64)
+	if err != nil {
+		parseErr := errors.NewBadRequestError("invalid user id")
+		c.JSON(parseErr.Status, parseErr)
+		return
+	}
+	res, getErr := services.GetUser(id)
+	if getErr != nil {
+		c.JSON(getErr.Status, getErr)
+		return
+	}
+	c.JSON(http.StatusCreated, res)
 	c.String(http.StatusNotImplemented, "")
 }
 
@@ -23,14 +35,11 @@ func CreateUser(c *gin.Context) {
 		c.JSON(restErr.Status, restErr)
 		return
 	}
-
 	res, saveErr := services.CreateUser(user)
 	if saveErr != nil {
 		c.JSON(saveErr.Status, saveErr)
 		return
 	}
-
-	// ??? implement response
 	c.JSON(http.StatusCreated, res)
 }
 

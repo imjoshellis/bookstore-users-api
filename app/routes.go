@@ -11,5 +11,5 @@ func MapRoutes() {
 	router.GET("/ping", ping.Ping)
 
 	router.POST("/users", users.CreateUser)
-	router.GET("/users/:userId", users.GetUser)
+	router.GET("/users/:id", users.GetUser)
 }
