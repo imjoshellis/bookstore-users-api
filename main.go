@@ -1,5 +1,7 @@
 package main
 
-func main() {
+import "bookstore/users/app"
 
+func main() {
+	app.StartApp()
 }
