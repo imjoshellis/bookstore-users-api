@@ -1,15 +1,17 @@
 package app
 
 import (
-	"bookstore/users/controllers/ping"
-	"bookstore/users/controllers/users"
+	"users/controllers/ping"
+	"users/controllers/users"
+
+	"github.com/gofiber/fiber/v2"
 )
 
 // MapRoutes maps routes to controllers
-func MapRoutes() {
+func MapRoutes(app *fiber.App) {
 	// Ping route for connection testing
-	router.GET("/ping", ping.Ping)
+	app.Get("/ping", ping.Ping)
 
-	router.POST("/users", users.CreateUser)
-	router.GET("/users/:id", users.GetUser)
+	app.Post("/users", users.CreateUser)
+	app.Get("/users/:id", users.GetUser)
 }

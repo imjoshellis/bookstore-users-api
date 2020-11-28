@@ -3,15 +3,17 @@ package users
 import (
 	"strings"
 	"users/utils/errors"
+
+	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
 // User struct models user
 type User struct {
-	ID          int64  `json:"id"`
-	FirstName   string `json:"firstName"`
-	LastName    string `json:"lastName"`
-	Email       string `json:"email"`
-	DateCreated string `json:"dateCreated"`
+	ID          primitive.ObjectID `bson:"_id, omitempty"`
+	FirstName   string             `bson:"firstName" json:"firstName"`
+	LastName    string             `bson:"lastName" json:"lastName"`
+	Email       string             `bson:"email" json:"email"`
+	DateCreated string             `bson:"dateCreated" json:"dateCreated"`
 }
 
 // Validate checks to make sure a user is valid

@@ -3,12 +3,11 @@ package users
 
 import (
 	"net/http"
-	"strconv"
 	"users/domain/users"
 	"users/services"
 	"users/utils/errors"
 
-	"github.com/gin-gonic/gin"
+	"github.com/gofiber/fiber/v2"
 )
 
 const (
@@ -17,40 +16,31 @@ const (
 )
 
 // GetUser returns an individual user
-func GetUser(c *gin.Context) {
-	id, err := strconv.ParseInt(c.Param("id"), base, intSize)
-	if err != nil {
-		parseErr := errors.NewBadRequestError("invalid user id")
-		c.JSON(parseErr.Status, parseErr)
-		return
-	}
+func GetUser(c *fiber.Ctx) error {
+	id := c.Params("id")
 	res, getErr := services.GetUser(id)
 	if getErr != nil {
-		c.JSON(getErr.Status, getErr)
-		return
+		return c.Status(getErr.Status).JSON(getErr)
 	}
-	c.JSON(http.StatusCreated, res)
-	c.String(http.StatusNotImplemented, "")
+	return c.Status(http.StatusOK).JSON(res)
 }
 
 // CreateUser creates a user
-func CreateUser(c *gin.Context) {
+func CreateUser(c *fiber.Ctx) error {
 	var user users.User
-	if err := c.ShouldBindJSON(&user); err != nil {
+	if err := c.BodyParser(&user); err != nil {
 		restErr := errors.NewBadRequestError("Invalid JSON Body")
-		c.JSON(restErr.Status, restErr)
-		return
+		return c.Status(restErr.Status).JSON(restErr)
 	}
 	res, saveErr := services.CreateUser(user)
 	if saveErr != nil {
-		c.JSON(saveErr.Status, saveErr)
-		return
+		return c.Status(saveErr.Status).JSON(saveErr)
 	}
-	c.JSON(http.StatusCreated, res)
+	return c.Status(http.StatusCreated).JSON(res)
 }
 
 // SearchUser searches for a user
-func SearchUser(c *gin.Context) {
+func SearchUser(c *fiber.Ctx) error {
 	// ??? implement response
-	c.String(http.StatusNotImplemented, "")
+	return c.Status(http.StatusNotImplemented).SendString("")
 }

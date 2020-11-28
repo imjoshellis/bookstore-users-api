@@ -1,12 +1,26 @@
 // Package app is the entry point
 package app
 
-import "github.com/gin-gonic/gin"
+import (
+	"context"
+	"log"
+	"time"
+	"users/data"
 
-var router = gin.Default()
+	"github.com/gofiber/fiber/v2"
+)
 
-// StartApp sets up routes and starts a gin server
+// StartApp sets up routes and starts a fiber server
 func StartApp() {
-	MapRoutes()
-	router.Run("localhost:8080")
+	app := fiber.New()
+	MapRoutes(app)
+	defer func() {
+		log.Println("Disconnecting from MongoDB...")
+		ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+		defer cancel()
+		if err := data.Client.Disconnect(ctx); err != nil {
+			panic(err)
+		}
+	}()
+	log.Fatal(app.Listen("localhost:8080"))
 }

@@ -4,6 +4,8 @@ package services
 import (
 	"users/domain/users"
 	"users/utils/errors"
+
+	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
 // CreateUser is the service for creating users
@@ -18,11 +20,12 @@ func CreateUser(user users.User) (*users.User, *errors.RestErr) {
 }
 
 // GetUser is the service for getting users
-func GetUser(id int64) (*users.User, *errors.RestErr) {
-	if id <= 0 {
+func GetUser(id string) (*users.User, *errors.RestErr) {
+	objectID, idErr := primitive.ObjectIDFromHex(id)
+	if idErr != nil {
 		return nil, errors.NewBadRequestError("invalid id")
 	}
-	user := users.User{ID: id}
+	user := users.User{ID: objectID}
 	if err := user.Get(); err != nil {
 		return nil, err
 	}
