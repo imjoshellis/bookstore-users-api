@@ -2,9 +2,9 @@
 package users
 
 import (
-	"bookstore/users/utils/date"
-	"bookstore/users/utils/errors"
 	"fmt"
+	"users/utils/date"
+	"users/utils/errors"
 )
 
 var userDB = make(map[int64]*User)

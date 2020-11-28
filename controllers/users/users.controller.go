@@ -2,11 +2,11 @@
 package users
 
 import (
-	"bookstore/users/domain/users"
-	"bookstore/users/services"
-	"bookstore/users/utils/errors"
 	"net/http"
 	"strconv"
+	"users/domain/users"
+	"users/services"
+	"users/utils/errors"
 
 	"github.com/gin-gonic/gin"
 )

@@ -1,8 +1,8 @@
 package users
 
 import (
-	"bookstore/users/utils/errors"
 	"strings"
+	"users/utils/errors"
 )
 
 // User struct models user

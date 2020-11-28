@@ -2,8 +2,8 @@
 package services
 
 import (
-	"bookstore/users/domain/users"
-	"bookstore/users/utils/errors"
+	"users/domain/users"
+	"users/utils/errors"
 )
 
 // CreateUser is the service for creating users
