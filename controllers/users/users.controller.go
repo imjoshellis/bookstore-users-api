@@ -1,3 +1,4 @@
+// Package users holds the users controller
 package users
 
 import (
@@ -10,9 +11,14 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+const (
+	base    = 10
+	intSize = 64
+)
+
 // GetUser returns an individual user
 func GetUser(c *gin.Context) {
-	id, err := strconv.ParseInt(c.Param("id"), 10, 64)
+	id, err := strconv.ParseInt(c.Param("id"), base, intSize)
 	if err != nil {
 		parseErr := errors.NewBadRequestError("invalid user id")
 		c.JSON(parseErr.Status, parseErr)

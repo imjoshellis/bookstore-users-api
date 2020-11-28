@@ -1,3 +1,4 @@
+// Package ping is for testing connection
 package ping
 
 import (

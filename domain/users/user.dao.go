@@ -1,15 +1,17 @@
+// Package users holds the users model
 package users
 
 import (
+	"bookstore/users/utils/date"
 	"bookstore/users/utils/errors"
 	"fmt"
 )
 
-var userDb = make(map[int64]*User)
+var userDB = make(map[int64]*User)
 
 // Get tries to get a user from the database
 func (u *User) Get() *errors.RestErr {
-	result := userDb[u.ID]
+	result := userDB[u.ID]
 	if result == nil {
 		msg := fmt.Sprintf("user %d not found", u.ID)
 		return errors.NewBadRequestError(msg)
@@ -24,13 +26,10 @@ func (u *User) Get() *errors.RestErr {
 
 // Save tries to save a user to the database
 func (u *User) Save() *errors.RestErr {
-	current := userDb[u.ID]
-	if current != nil {
-		msg := fmt.Sprintf("user %d already exists", u.ID)
-		return errors.NewBadRequestError(msg)
-	}
-	userDb[u.ID] = u
-	result := userDb[u.ID]
+	u.DateCreated = date.GetNowString()
+	u.ID = int64(len(userDB)) + 1
+	userDB[u.ID] = u
+	result := userDB[u.ID]
 	if result == nil {
 		msg := "there was a problem saving to the db"
 		return errors.NewServerError(msg)

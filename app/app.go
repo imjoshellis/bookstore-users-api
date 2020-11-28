@@ -1,3 +1,4 @@
+// Package app is the entry point
 package app
 
 import "github.com/gin-gonic/gin"

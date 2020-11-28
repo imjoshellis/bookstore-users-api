@@ -1,3 +1,4 @@
+// Package errors has common errors
 package errors
 
 import "net/http"
