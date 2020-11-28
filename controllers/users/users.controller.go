@@ -5,7 +5,7 @@ import (
 	"net/http"
 	"users/domain/users"
 	"users/services"
-	"users/utils/errors"
+	"users/utils/errs"
 
 	"github.com/gofiber/fiber/v2"
 )
@@ -29,7 +29,7 @@ func GetUser(c *fiber.Ctx) error {
 func CreateUser(c *fiber.Ctx) error {
 	var user users.User
 	if err := c.BodyParser(&user); err != nil {
-		restErr := errors.NewBadRequestError("Invalid JSON Body")
+		restErr := errs.NewBadRequestError("Invalid JSON Body")
 		return c.Status(restErr.Status).JSON(restErr)
 	}
 	res, saveErr := services.CreateUser(user)

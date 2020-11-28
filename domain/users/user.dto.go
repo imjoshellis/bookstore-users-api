@@ -2,7 +2,7 @@ package users
 
 import (
 	"strings"
-	"users/utils/errors"
+	"users/utils/errs"
 
 	"go.mongodb.org/mongo-driver/bson/primitive"
 )
@@ -17,10 +17,10 @@ type User struct {
 }
 
 // Validate checks to make sure a user is valid
-func (u *User) Validate() *errors.RestErr {
+func (u *User) Validate() *errs.RestErr {
 	u.Email = strings.TrimSpace(strings.ToLower(u.Email))
 	if u.Email == "" {
-		return errors.NewBadRequestError("invalid email address")
+		return errs.NewBadRequestError("invalid email address")
 	}
 	return nil
 }

@@ -1,5 +1,5 @@
-// Package errors has common errors
-package errors
+// Package errs has common errors
+package errs
 
 import "net/http"
 

@@ -5,7 +5,7 @@ import (
 	"context"
 	"log"
 	"time"
-	"users/data"
+	"users/data/mongodb/usersdb"
 
 	"github.com/gofiber/fiber/v2"
 )
@@ -18,7 +18,7 @@ func StartApp() {
 		log.Println("Disconnecting from MongoDB...")
 		ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 		defer cancel()
-		if err := data.Client.Disconnect(ctx); err != nil {
+		if err := usersdb.Client.Disconnect(ctx); err != nil {
 			panic(err)
 		}
 	}()
