@@ -9,7 +9,7 @@ import (
 
 // User struct models user
 type User struct {
-	ID          primitive.ObjectID `bson:"_id, omitempty"`
+	ID          primitive.ObjectID `bson:"_id, omitempty" json:"id"`
 	FirstName   string             `bson:"firstName" json:"firstName"`
 	LastName    string             `bson:"lastName" json:"lastName"`
 	Email       string             `bson:"email" json:"email"`
